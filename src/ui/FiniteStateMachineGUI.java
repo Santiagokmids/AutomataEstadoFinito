@@ -7,19 +7,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import model.AutomataEstadoFinito;
+import model.FiniteStateMachine;
 
-public class AutomataEstadoFinitoGUI {
+public class FiniteStateMachineGUI {
 	
-	public AutomataEstadoFinito automataEstadoFinito;
+	public FiniteStateMachine finiteStateMachine;
 	
 	private Stage window;
 	
 	@FXML
     private BorderPane mainPane;
 	
-	public AutomataEstadoFinitoGUI(AutomataEstadoFinito automataEstadoFinito, Stage stage) {
-		this.automataEstadoFinito = automataEstadoFinito;
+	public FiniteStateMachineGUI(FiniteStateMachine finiteStateMachine, Stage stage) {
+		this.finiteStateMachine = finiteStateMachine;
 		this.window = stage;
 	}
 	

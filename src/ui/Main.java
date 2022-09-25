@@ -5,12 +5,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.AutomataEstadoFinito;
+import model.FiniteStateMachine;
 
 public class Main extends Application {
 	
-	private AutomataEstadoFinito automataEstadoFinito;
-	private AutomataEstadoFinitoGUI automataEstadoFinitoGUI;
+	private FiniteStateMachine finiteStateMachine;
+	private FiniteStateMachineGUI finiteStateMachineGUI;
 	
 	public static void main(String[] args) {
 		launch(args);
@@ -19,11 +19,11 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		automataEstadoFinitoGUI = new AutomataEstadoFinitoGUI(automataEstadoFinito, primaryStage);
+		finiteStateMachineGUI = new FiniteStateMachineGUI(finiteStateMachine, primaryStage);
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-pane.fxml"));
 		
-		fxmlLoader.setController(automataEstadoFinitoGUI);
+		fxmlLoader.setController(finiteStateMachineGUI);
 		
 		Parent root = fxmlLoader.load();
 		
@@ -32,7 +32,7 @@ public class Main extends Application {
 		primaryStage.setTitle("Autómatas de Estados Finitos");
 		primaryStage.setResizable(false);
 		primaryStage.show();
-		automataEstadoFinitoGUI.loadBanner();
+		finiteStateMachineGUI.loadBanner();
 	}
 
 }
