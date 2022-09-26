@@ -3,9 +3,13 @@ package ui;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.lang.model.element.NestingKind;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -21,6 +25,8 @@ import model.FiniteStateMachine;
 public class FiniteStateMachineGUI {
 	
 	public FiniteStateMachine finiteStateMachine;
+	
+	public ArrayList<TextField> textFields = new ArrayList<>();
 	
 	@FXML	
 	private VBox table;
@@ -88,7 +94,7 @@ public class FiniteStateMachineGUI {
 		alert.setHeaderText("No se puede continuar");
 		
 		if(!verify && machine >= 0) {
-			table(finiteStateMachine.getS(), finiteStateMachine.getQ());
+			table(finiteStateMachine.getQ(), finiteStateMachine.getS());
 			
 		} else if(machine < 0) {
 			alert.setContentText("Debe seleccionar un autómata antes de continuar");
@@ -117,30 +123,51 @@ public class FiniteStateMachineGUI {
 
     	GridPane gridPane = new GridPane();
     	int stateIndex = 0;
+    	int output = 1;
     	
-    	for (int i = 0; i < states.size(); i++) {
-    		for (int j = 0; j < inputs.size(); j++) {
+    	if (machine == 1) {
+			output = 2;
+		}
+    	
+    	for (int i = 0; i < states.size()+1; i++) {
+    		int inputIndex = 0;
+    		for (int j = 0; j < inputs.size()+output; j++) {
     			int row = i;
         		int col = j;
-        		int inputIndex = 0;
         		
-        		if (col != 0 && row == 0) {
+        		if (col != 0 && row == 0 && j <= inputs.size()) {
     				Label label = new Label(inputs.get(inputIndex));
-    				label.setId("label"+col+row);
+    				label.setId(col+""+row);
     				gridPane.add(label, col, row);
+    				GridPane.setHalignment(label, HPos.CENTER);
     				inputIndex++;
-    			}else if (col == 0 && row != 0) {
+    			}else if(col != 0 && row == 0 && j > inputs.size()) {
+    				Label label = new Label("Salidas");
+    				label.setId(col+""+row);
+    				gridPane.add(label, col, row);
+    				GridPane.setHalignment(label, HPos.CENTER);
+    			} else if (col == 0 && row != 0) {
     				Label label = new Label(states.get(stateIndex));
-    				label.setId("label"+col+row);
+    				label.setId(col+""+row);
     				gridPane.add(label, col, row);
     				stateIndex++;
 				} else if(row != 0 && col != 0) {
         			TextField textField = new TextField();
-        			textField.setId("field"+col+row);
+        			textField.setId(col+""+row);
             		gridPane.add(textField, col, row);
+            		textFields.add(textField);
         		}
 			}
 		}
+    	gridPane.setAlignment(Pos.CENTER);
     	table.getChildren().add(gridPane);
+    }
+    
+    @FXML
+    public void getValues(ActionEvent event) {
+    	ArrayList<String> valueStrings = new ArrayList<>();
+    	for (int i = 0; i < textFields.size(); i++) {
+			valueStrings.add(textFields.get(i).getText());
+		}
     }
 }
