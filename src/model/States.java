@@ -8,12 +8,14 @@ public class States {
 	private ArrayList<String> inputs;
 	private ArrayList<String> outputs;
 	private ArrayList<String> endStates;
+	private boolean isVisited; 
 	
 	public States(String state, ArrayList<String> inputs, ArrayList<String> outputs, ArrayList<String> endStates) {
 		this.setState(state);
 		this.setInputs(inputs);
 		this.setOutputs(outputs);
 		this.setEndStates(endStates);
+		setVisited(false);
 	}
 
 	public String getState() {
@@ -46,6 +48,14 @@ public class States {
 
 	public void setEndStates(ArrayList<String> endStates) {
 		this.endStates = endStates;
+	}
+
+	public boolean isVisited() {
+		return isVisited;
+	}
+
+	public void setVisited(boolean isVisited) {
+		this.isVisited = isVisited;
 	}
 	
 }
