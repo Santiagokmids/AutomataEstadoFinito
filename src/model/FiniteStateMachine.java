@@ -9,6 +9,8 @@ public class FiniteStateMachine {
 
 	private ArrayList<String> Q;
 	private ArrayList<String> S;
+	private ArrayList<States> mealyMachine;
+	private ArrayList<States> mooreMachine;
 	
 	public FiniteStateMachine() {
 		Q = new ArrayList<>();
@@ -65,6 +67,23 @@ public class FiniteStateMachine {
 		}
 
 		return verify;
+	}
+	
+	public ArrayList<States> searchConnected(int machine){
+		ArrayList<States> statesConnected = new ArrayList<>();
+		
+		if (machine == 0) {
+			searchConnected(statesConnected, mealyMachine, mealyMachine.get(0));
+			
+		} else if(machine == 1) {
+			searchConnected(statesConnected, mooreMachine, mooreMachine.get(0));
+		}
+		
+		return statesConnected;
+	}
+	
+	public void searchConnected(ArrayList<States> statesConnected, ArrayList<States> machine, States state) {
+		
 	}
 	
 	public ArrayList<String> getS() {
