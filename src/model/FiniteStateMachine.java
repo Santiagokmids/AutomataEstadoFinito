@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Hashtable;
 
 public class FiniteStateMachine {
 	
@@ -9,12 +11,14 @@ public class FiniteStateMachine {
 
 	private ArrayList<String> Q;
 	private ArrayList<String> S;
+	private Hashtable<String, States> node;
 	private ArrayList<States> mealyMachine;
 	private ArrayList<States> mooreMachine;
 	
 	public FiniteStateMachine() {
 		Q = new ArrayList<>();
 		S = new ArrayList<>();
+		node = new Hashtable<>();
 	}
 
 	public boolean createMealyMachine() {
@@ -33,6 +37,8 @@ public class FiniteStateMachine {
 		for(int i = 0; i < inputs.length; i++) {
 			S.add(inputs[i]);
 		}
+		
+		createStates();
 	}
 
 	public boolean getAtributes(String states, String inputs) {
@@ -44,11 +50,43 @@ public class FiniteStateMachine {
 		return verify;
 	}
 	
-	public void nodeData(ArrayList<String> data, int typeMachine) {
-		if (typeMachine == MEALY) {
+	public void nodeMealy(Hashtable<String, String> hasdNode) {
+		Enumeration<String> enumeration = hasdNode.elements();
+		Enumeration<String> keysEnumeration = hasdNode.keys();
+		while (enumeration.hasMoreElements()) {
+			String[] outputs = ((String) enumeration.nextElement()).split(",");
+			String[] keys = ((String) keysEnumeration.nextElement()).split("");
 			
-		}else if (typeMachine == MOORE) {
+			States nodeState = node.get(Q.get(Integer.parseInt(keys[1])-1));
 			
+			nodeState.addInputs(S.get(Integer.parseInt(keys[0])-1));
+			nodeState.addOutputs(outputs[1]);
+			nodeState.addEndStates(node.get(outputs[0]));
+		}
+	}
+	
+	public void nodeMoore(Hashtable<String, String> hasdNode) {
+		Enumeration<String> enumeration = hasdNode.elements();
+		Enumeration<String> keysEnumeration = hasdNode.keys();
+		int cont = 0;
+		while (enumeration.hasMoreElements() && cont < S.size()) {
+			cont++;
+			String output = (String) enumeration.nextElement();
+			String[] keys = ((String) keysEnumeration.nextElement()).split("");
+			
+			States nodeStates = node.get(Q.get(Integer.parseInt(keys[1])-1));
+			String indexNode = hasdNode.get(Integer.toString(S.size()+1)+keys[1]);
+			
+			nodeStates.addInputs(S.get(Integer.parseInt(keys[0])-1));
+			nodeStates.addOutputs(indexNode);
+			nodeStates.addEndStates(node.get(output));
+		}
+	}
+	
+	public void createStates() {
+		for (int i = 0; i < Q.size(); i++) {
+			States state = new States(Q.get(i));
+			node.put(Q.get(i), state);
 		}
 	}
 
@@ -72,10 +110,10 @@ public class FiniteStateMachine {
 	public ArrayList<States> searchConnected(int machine){
 		ArrayList<States> statesConnected = new ArrayList<>();
 		
-		if (machine == 0) {
+		if (machine == MEALY) {
 			searchConnected(statesConnected, mealyMachine, mealyMachine.get(0));
 			
-		} else if(machine == 1) {
+		} else if(machine == MOORE) {
 			searchConnected(statesConnected, mooreMachine, mooreMachine.get(0));
 		}
 		
