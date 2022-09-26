@@ -3,6 +3,9 @@ package model;
 import java.util.ArrayList;
 
 public class FiniteStateMachine {
+	
+	public static final int MEALY = 0;
+	public static final int MOORE = 1;
 
 	private ArrayList<String> Q;
 	private ArrayList<String> S;
@@ -37,6 +40,14 @@ public class FiniteStateMachine {
 		boolean verify = verifyStates(newStates, newInputs);
 
 		return verify;
+	}
+	
+	public void nodeData(ArrayList<String> data, int typeMachine) {
+		if (typeMachine == MEALY) {
+			
+		}else if (typeMachine == MOORE) {
+			
+		}
 	}
 
 	public boolean verifyStates(String[] states, String[] inputs) {

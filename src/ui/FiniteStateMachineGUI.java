@@ -2,9 +2,6 @@ package ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
-import javax.lang.model.element.NestingKind;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -73,13 +70,13 @@ public class FiniteStateMachineGUI {
 	@FXML
    public void labelToMealy(ActionEvent event) {
 		labelMachine.setText("Autómata de Mealy");
-		machine = 0;
+		machine = FiniteStateMachine.MEALY;
     }
 
     @FXML
     public void labelToMoore(ActionEvent event) {
     	labelMachine.setText("Autómata de Moore");
-    	machine = 1;
+    	machine = FiniteStateMachine.MOORE;
     }
     
     @FXML
@@ -125,7 +122,7 @@ public class FiniteStateMachineGUI {
     	int stateIndex = 0;
     	int output = 1;
     	
-    	if (machine == 1) {
+    	if (machine == FiniteStateMachine.MOORE) {
 			output = 2;
 		}
     	
@@ -169,5 +166,6 @@ public class FiniteStateMachineGUI {
     	for (int i = 0; i < textFields.size(); i++) {
 			valueStrings.add(textFields.get(i).getText());
 		}
+    	finiteStateMachine.nodeData(valueStrings, machine);
     }
 }
