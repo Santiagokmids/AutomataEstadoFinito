@@ -10,12 +10,24 @@ public class States {
 	private ArrayList<States> endStates;
 	private boolean isVisited; 
 	
-	public States(String state, ArrayList<String> inputs, ArrayList<String> outputs, ArrayList<States> endStates) {
+	public States(String state) {
 		this.setState(state);
-		this.setInputs(inputs);
-		this.setOutputs(outputs);
-		this.setEndStates(endStates);
+		inputs = new ArrayList<>();
+		outputs = new ArrayList<>();
+		endStates = new ArrayList<>();
 		setVisited(false);
+	}
+	
+	public void addInputs(String input) {
+		inputs.add(input);
+	}
+	
+	public void addOutputs(String output) {
+		outputs.add(output);
+	}
+	
+	public void addEndStates(States state) {
+		endStates.add(state);
 	}
 	
 	public String getState() {
