@@ -7,17 +7,17 @@ public class States {
 	private String state;
 	private ArrayList<String> inputs;
 	private ArrayList<String> outputs;
-	private ArrayList<String> endStates;
+	private ArrayList<States> endStates;
 	private boolean isVisited; 
 	
-	public States(String state, ArrayList<String> inputs, ArrayList<String> outputs, ArrayList<String> endStates) {
+	public States(String state, ArrayList<String> inputs, ArrayList<String> outputs, ArrayList<States> endStates) {
 		this.setState(state);
 		this.setInputs(inputs);
 		this.setOutputs(outputs);
 		this.setEndStates(endStates);
 		setVisited(false);
 	}
-
+	
 	public String getState() {
 		return state;
 	}
@@ -42,11 +42,11 @@ public class States {
 		this.outputs = outputs;
 	}
 
-	public ArrayList<String> getEndStates() {
+	public ArrayList<States> getEndStates() {
 		return endStates;
 	}
 
-	public void setEndStates(ArrayList<String> endStates) {
+	public void setEndStates(ArrayList<States> endStates) {
 		this.endStates = endStates;
 	}
 
