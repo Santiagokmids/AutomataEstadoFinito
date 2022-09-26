@@ -23,7 +23,6 @@ public class FiniteStateMachine {
 	}
 	
 	public boolean verifyStates(String[] states) {
-		
 		boolean verify = false;
 
 		for (int i = 0; i < states.length && !verify; i++) {

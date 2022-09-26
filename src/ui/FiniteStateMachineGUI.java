@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.FiniteStateMachine;
 
@@ -17,7 +19,8 @@ public class FiniteStateMachineGUI {
 	
 	public FiniteStateMachine finiteStateMachine;
 	
-	private Stage window;
+	@FXML	
+	private VBox table;
 	
 	@FXML
     private Button btnMealy;
@@ -42,7 +45,6 @@ public class FiniteStateMachineGUI {
 	
 	public FiniteStateMachineGUI(FiniteStateMachine finiteStateMachine, Stage stage) {
 		this.finiteStateMachine = finiteStateMachine;
-		this.window = stage;
 	}
 	
 	@FXML
@@ -57,24 +59,63 @@ public class FiniteStateMachineGUI {
 	}
 	
 	@FXML
-    void labelToMealy(ActionEvent event) {
+   public void labelToMealy(ActionEvent event) {
 		labelMachine.setText("Autómata de Mealy");
     }
 
     @FXML
-    void labelToMoore(ActionEvent event) {
+    public void labelToMoore(ActionEvent event) {
     	labelMachine.setText("Autómata de Moore");
     }
     
     @FXML
-    void goToInputs(ActionEvent event) {
-    	boolean checkText = finiteStateMachine.getAtributes(txtStates.getText(), txtInputs.getText());
+    public void goToInputs(ActionEvent event) throws IOException {
+    	String state = txtStates.getText();
+		String input = txtInputs.getText();
+		table();
+    }
+    
+    @FXML
+    public void table() throws IOException {
+    	FXMLLoader loader = new FXMLLoader(getClass().getResource("table.fxml"));
+		
+		loader.setController(this);
+		Parent load = loader.load();
+		mainPane.getChildren().clear();
+		mainPane.setTop(load);
+		
+		createTable();
+    }
+    
+    @FXML
+	public void createTable() {
+
+    	GridPane gridPane = new GridPane();
+    	gridPane.add(new TextField(), 0, 0);
+    	gridPane.add(new TextField(), 0, 1);
+    	gridPane.add(new TextField(), 0, 2);
+    	gridPane.add(new TextField(), 0, 3);
+    	gridPane.add(new TextField(), 0, 4);
+    	gridPane.add(new TextField(), 0, 5);
+    	gridPane.add(new TextField(), 0, 6);
+    	gridPane.add(new TextField(), 0, 7);
+    	gridPane.add(new TextField(), 0, 8);
+    	gridPane.add(new TextField(), 1, 0);
+    	gridPane.add(new TextField(), 1, 1);
+    	gridPane.add(new TextField(), 1, 2);
+    	gridPane.add(new TextField(), 1, 3);
+    	gridPane.add(new TextField(), 1, 4);
+    	gridPane.add(new TextField(), 2, 0);
+    	gridPane.add(new TextField(), 3, 0);
+    	gridPane.add(new TextField(), 4, 0);
+    	gridPane.add(new TextField(), 5, 0);
+    	gridPane.add(new TextField(), 6, 0);
+    	gridPane.add(new TextField(), 7, 0);
+    	gridPane.add(new TextField(), 8, 0);
+    	gridPane.add(new TextField(), 9, 0);
+
     	
-    	if (!checkText) {
-			//cambio de ventana
-		} else {
-			//alerta
-		}
+    	table.getChildren().add(gridPane);
     }
 
 
