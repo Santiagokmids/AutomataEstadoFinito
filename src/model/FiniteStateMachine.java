@@ -32,12 +32,12 @@ public class FiniteStateMachine {
 		String[] newStates = states.split(",");
 		String[] newInputs = states.split(",");
 
-		boolean verify = verifyStates(newStates);
+		boolean verify = verifyStates(newStates, newInputs);
 
 		return verify;
 	}
 
-	public boolean verifyStates(String[] states) {
+	public boolean verifyStates(String[] states, String[] inputs) {
 		boolean verify = false;
 
 		for (int i = 0; i < states.length && !verify; i++) {
@@ -46,7 +46,27 @@ public class FiniteStateMachine {
 				verify = true;
 			}
 		}
+		
+		if(!verify) {
+			assignAtributes(states, inputs);
+		}
 
 		return verify;
+	}
+	
+	public ArrayList<String> getS() {
+		return S;
+	}
+
+	public void setS(ArrayList<String> S) {
+		this.S = S;
+	}
+
+	public ArrayList<String> getQ() {
+		return Q;
+	}
+
+	public void setQ(ArrayList<String> Q) {
+		this.Q = Q;
 	}
 }
