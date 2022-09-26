@@ -12,6 +12,10 @@ public class Main extends Application {
 	private FiniteStateMachine finiteStateMachine;
 	private FiniteStateMachineGUI finiteStateMachineGUI;
 	
+	public Main(){
+		finiteStateMachine = new FiniteStateMachine();
+	}
+	
 	public static void main(String[] args) {
 		launch(args);
 	}

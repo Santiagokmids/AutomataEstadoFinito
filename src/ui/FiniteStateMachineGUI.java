@@ -6,9 +6,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -43,8 +45,11 @@ public class FiniteStateMachineGUI {
 	@FXML
     private BorderPane mainPane;
 	
+	public int machine; 
+	
 	public FiniteStateMachineGUI(FiniteStateMachine finiteStateMachine, Stage stage) {
 		this.finiteStateMachine = finiteStateMachine;
+		machine = -1;
 	}
 	
 	@FXML
@@ -61,18 +66,37 @@ public class FiniteStateMachineGUI {
 	@FXML
    public void labelToMealy(ActionEvent event) {
 		labelMachine.setText("Autómata de Mealy");
+		machine = 0;
     }
 
     @FXML
     public void labelToMoore(ActionEvent event) {
     	labelMachine.setText("Autómata de Moore");
+    	machine = 1;
     }
     
     @FXML
     public void goToInputs(ActionEvent event) throws IOException {
     	String state = txtStates.getText();
 		String input = txtInputs.getText();
-		table();
+		
+		boolean verify = finiteStateMachine.getAtributes(state, input);
+		
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText("No se puede continuar");
+		
+		if(!verify && machine >= 0) {
+			table();
+			
+		} else if(machine < 0) {
+			alert.setContentText("Debe seleccionar un autómata antes de continuar");
+			alert.showAndWait();
+		}
+		else {
+			alert.setContentText("Los estados no pueden empezar con un valor numérico");
+			alert.showAndWait();
+		}
     }
     
     @FXML
@@ -117,6 +141,4 @@ public class FiniteStateMachineGUI {
     	
     	table.getChildren().add(gridPane);
     }
-
-
 }
