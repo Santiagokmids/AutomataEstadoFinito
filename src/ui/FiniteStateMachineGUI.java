@@ -1,6 +1,7 @@
 package ui;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -88,33 +89,34 @@ public class FiniteStateMachineGUI {
     }
     
     @FXML
-	public void createTable() {
+	public void createTable(ArrayList<String> states, ArrayList<String> inputs) {
 
     	GridPane gridPane = new GridPane();
-    	gridPane.add(new TextField(), 0, 0);
-    	gridPane.add(new TextField(), 0, 1);
-    	gridPane.add(new TextField(), 0, 2);
-    	gridPane.add(new TextField(), 0, 3);
-    	gridPane.add(new TextField(), 0, 4);
-    	gridPane.add(new TextField(), 0, 5);
-    	gridPane.add(new TextField(), 0, 6);
-    	gridPane.add(new TextField(), 0, 7);
-    	gridPane.add(new TextField(), 0, 8);
-    	gridPane.add(new TextField(), 1, 0);
-    	gridPane.add(new TextField(), 1, 1);
-    	gridPane.add(new TextField(), 1, 2);
-    	gridPane.add(new TextField(), 1, 3);
-    	gridPane.add(new TextField(), 1, 4);
-    	gridPane.add(new TextField(), 2, 0);
-    	gridPane.add(new TextField(), 3, 0);
-    	gridPane.add(new TextField(), 4, 0);
-    	gridPane.add(new TextField(), 5, 0);
-    	gridPane.add(new TextField(), 6, 0);
-    	gridPane.add(new TextField(), 7, 0);
-    	gridPane.add(new TextField(), 8, 0);
-    	gridPane.add(new TextField(), 9, 0);
-
+    	int stateIndex = 0;
     	
+    	for (int i = 0; i < states.size(); i++) {
+    		for (int j = 0; j < inputs.size(); j++) {
+    			int row = i;
+        		int col = j;
+        		int inputIndex = 0;
+        		
+        		if (col != 0 && row == 0) {
+    				Label label = new Label(inputs.get(inputIndex));
+    				label.setId("label"+col+row);
+    				gridPane.add(label, col, row);
+    				inputIndex++;
+    			}else if (col == 0 && row != 0) {
+    				Label label = new Label(states.get(stateIndex));
+    				label.setId("label"+col+row);
+    				gridPane.add(label, col, row);
+    				stateIndex++;
+				} else if(row != 0 && col != 0) {
+        			TextField textField = new TextField();
+        			textField.setId("field"+col+row);
+            		gridPane.add(textField, col, row);
+        		}
+			}
+		}
     	table.getChildren().add(gridPane);
     }
 
