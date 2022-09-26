@@ -8,6 +8,8 @@ public class FiniteStateMachine {
 	private ArrayList<String> S;
 	
 	public FiniteStateMachine() {
+		Q = new ArrayList<>();
+		S = new ArrayList<>();
 	}
 
 	public boolean createMealyMachine() {
@@ -24,13 +26,13 @@ public class FiniteStateMachine {
 		}
 		
 		for(int i = 0; i < inputs.length; i++) {
-			S.add(states[i]);
+			S.add(inputs[i]);
 		}
 	}
 
 	public boolean getAtributes(String states, String inputs) {
 		String[] newStates = states.split(",");
-		String[] newInputs = states.split(",");
+		String[] newInputs = inputs.split(",");
 
 		boolean verify = verifyStates(newStates, newInputs);
 

@@ -29,7 +29,7 @@
       </AnchorPane>
       <AnchorPane prefHeight="79.0" prefWidth="854.0">
          <children>
-            <Button layoutX="401.0" layoutY="35.0" mnemonicParsing="false" text="Button" />
+            <Button layoutX="401.0" layoutY="35.0" mnemonicParsing="false" onAction="#getValues" text="Siguiente" />
          </children>
       </AnchorPane>
    </children>
