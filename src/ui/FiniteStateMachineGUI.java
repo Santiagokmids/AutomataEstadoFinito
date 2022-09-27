@@ -2,7 +2,6 @@ package ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 
 import javafx.event.ActionEvent;
@@ -21,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.FiniteStateMachine;
+import model.States;
 
 public class FiniteStateMachineGUI {
 	
@@ -97,10 +97,13 @@ public class FiniteStateMachineGUI {
 		if (state.isEmpty() || input.isEmpty()) {
 			alert.setContentText("Debe ingresar los valores antes de continuar");
 			alert.showAndWait();
+			
 		}else if(!state.isEmpty() && !input.isEmpty() && machine >= 0) {
 			verify = finiteStateMachine.getAtributes(state, input);
+			
 			if (!verify) {
 				table(finiteStateMachine.getQ(), finiteStateMachine.getS());
+				
 			}else {
 				alert.setContentText("Los estados no pueden empezar con un valor numérico");
 				alert.showAndWait();
@@ -149,18 +152,23 @@ public class FiniteStateMachineGUI {
     				Label label = new Label(inputs.get(inputIndex));
     				label.setId(col+""+row);
     				gridPane.add(label, col, row);
+    				
     				GridPane.setHalignment(label, HPos.CENTER);
     				inputIndex++;
+    				
     			}else if(col != 0 && row == 0 && j > inputs.size()) {
     				Label label = new Label("Salidas");
     				label.setId(col+""+row);
+    				
     				gridPane.add(label, col, row);
     				GridPane.setHalignment(label, HPos.CENTER);
+    				
     			} else if (col == 0 && row != 0) {
     				Label label = new Label(states.get(stateIndex));
     				label.setId(col+""+row);
     				gridPane.add(label, col, row);
     				stateIndex++;
+    				
 				} else if(row != 0 && col != 0) {
         			TextField textField = new TextField();
         			textField.setId(col+""+row);
@@ -175,24 +183,26 @@ public class FiniteStateMachineGUI {
     
     @FXML
     public void getValues(ActionEvent event) {
-    	for (int i = 0; i < textFields.size(); i++) {
-    		if (!textFields.get(i).getText().isEmpty()) {
-    			contenedorHashtable.put(textFields.get(i).getId(), textFields.get(i).getText());
-			}
-		}
-    	
-    	Enumeration<String> enumeration = contenedorHashtable.elements();
-    	Enumeration<String> keysEnumeration = contenedorHashtable.keys();
-		
-		while (enumeration.hasMoreElements()) {
-			System.out.println(keysEnumeration.nextElement()+" "+enumeration.nextElement());
-		}
     	
     	if (machine == FiniteStateMachine.MEALY) {
+    		
+    		for (int i = 0; i < textFields.size(); i++) {
+        		if (!textFields.get(i).getText().isEmpty()) {
+        			contenedorHashtable.put(textFields.get(i).getId(), textFields.get(i).getText());
+    			}
+    		}
     		finiteStateMachine.nodeMealy(contenedorHashtable);
+    		
 		}else if (machine == FiniteStateMachine.MOORE) {
+			
+			for (int i = 0; i < textFields.size(); i++) {
+        		if (!textFields.get(i).getText().isEmpty()) {
+        			contenedorHashtable.put(textFields.get(i).getId(), textFields.get(i).getText());
+    			}
+    		}
 			finiteStateMachine.nodeMoore(contenedorHashtable);
 		}
     	
+    	ArrayList<States> states = finiteStateMachine.searchConnected();
     }
 }
