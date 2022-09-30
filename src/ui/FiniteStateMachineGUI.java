@@ -189,6 +189,9 @@ public class FiniteStateMachineGUI {
     		for (int i = 0; i < textFields.size(); i++) {
         		if (!textFields.get(i).getText().isEmpty()) {
         			contenedorHashtable.put(textFields.get(i).getId(), textFields.get(i).getText());
+        			
+    			} else {
+    				contenedorHashtable.put(textFields.get(i).getId(), "vacio,vacio");
     			}
     		}
     		finiteStateMachine.nodeMealy(contenedorHashtable);
@@ -198,11 +201,16 @@ public class FiniteStateMachineGUI {
 			for (int i = 0; i < textFields.size(); i++) {
         		if (!textFields.get(i).getText().isEmpty()) {
         			contenedorHashtable.put(textFields.get(i).getId(), textFields.get(i).getText());
+        			
+    			}else {
+    				contenedorHashtable.put(textFields.get(i).getId(), "vacio");
     			}
     		}
 			finiteStateMachine.nodeMoore(contenedorHashtable);
 		}
     	
     	ArrayList<States> states = finiteStateMachine.searchConnected();
+
+    	ArrayList<ArrayList<States>> partitioning = finiteStateMachine.partitioning(states);
     }
 }

@@ -8,7 +8,7 @@ public class States {
 	private ArrayList<String> inputs;
 	private ArrayList<String> outputs;
 	private ArrayList<States> endStates;
-	private boolean isVisited; 
+	private boolean isVisited;
 	
 	public States(String state) {
 		this.setState(state);
