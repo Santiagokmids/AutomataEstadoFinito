@@ -301,7 +301,7 @@ public class FiniteStateMachine {
 
 			for(int i = 1; i < states.size(); i++) {
 				
-				System.out.println("-----------SE IGUALA-------------");
+				System.out.println("-----------SE IGUALA--------------");
 				System.out.println(first.getState()+": "+first.getOutputs()+" "+states.get(i).getState()+": "+states.get(i).getOutputs());
 
 				if(first.getOutputs().equals(states.get(i).getOutputs())) {
