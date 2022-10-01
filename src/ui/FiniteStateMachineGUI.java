@@ -2,6 +2,7 @@ package ui;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 
 import javafx.event.ActionEvent;
@@ -209,8 +210,28 @@ public class FiniteStateMachineGUI {
 			finiteStateMachine.nodeMoore(contenedorHashtable);
 		}
     	
+    	System.out.println("-------------------PRIMEROS ESTADOS--------------------");
+    	Enumeration<String> contenedor1 = contenedorHashtable.elements();
+    	Enumeration<String> keys = contenedorHashtable.keys();
+    	while (contenedor1.hasMoreElements()) {
+			String states2 = contenedor1.nextElement();
+			String key = keys.nextElement();
+			System.out.println(states2+" KEY:"+key);
+		}
+    	
     	ArrayList<States> states = finiteStateMachine.searchConnected();
 
-    	ArrayList<ArrayList<States>> partitioning = finiteStateMachine.partitioning(states);
+    	ArrayList<Hashtable<String, States>> partitioning = finiteStateMachine.partitioning(states);
+    	
+    	System.out.println("------------SEGUNDO PARTICIONAMIENTO--------------");
+    	
+    	for (int i = 0; i < partitioning.size(); i++) {
+    		System.out.println("NUEVO BLOQUE:");
+			Enumeration<States> contenedor = partitioning.get(i).elements();
+			while (contenedor.hasMoreElements()) {
+				States states2 = (States) contenedor.nextElement();
+				System.out.println(states2.getState()+" Tamanio:"+partitioning.size());
+			}
+		}
     }
 }
