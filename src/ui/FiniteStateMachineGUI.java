@@ -201,22 +201,12 @@ public class FiniteStateMachineGUI {
 			
 			for (int i = 0; i < textFields.size(); i++) {
         		if (!textFields.get(i).getText().isEmpty()) {
-        			contenedorHashtable.put(textFields.get(i).getId(), textFields.get(i).getText());
-        			
+        			contenedorHashtable.put(textFields.get(i).getId(), textFields.get(i).getText());		
     			}else {
     				contenedorHashtable.put(textFields.get(i).getId(), "vacio");
     			}
     		}
 			finiteStateMachine.nodeMoore(contenedorHashtable);
-		}
-    	
-    	System.out.println("-------------------PRIMEROS ESTADOS--------------------");
-    	Enumeration<String> contenedor1 = contenedorHashtable.elements();
-    	Enumeration<String> keys = contenedorHashtable.keys();
-    	while (contenedor1.hasMoreElements()) {
-			String states2 = contenedor1.nextElement();
-			String key = keys.nextElement();
-			System.out.println(states2+" KEY:"+key);
 		}
     	
     	ArrayList<States> states = finiteStateMachine.searchConnected();
@@ -230,7 +220,7 @@ public class FiniteStateMachineGUI {
 			Enumeration<States> contenedor = partitioning.get(i).elements();
 			while (contenedor.hasMoreElements()) {
 				States states2 = (States) contenedor.nextElement();
-				System.out.println(states2.getState()+" Tamanio:"+partitioning.size());
+				System.out.println(states2.getState());
 			}
 		}
     }

@@ -50,85 +50,93 @@ public class FiniteStateMachine {
 	}
 
 	public void nodeMealy(Hashtable<String, String> hasdNode) {
-		Enumeration<String> enumeration = hasdNode.elements();
-		Enumeration<String> keysEnumeration = hasdNode.keys();
+		for (int i = 1; i < S.size()+1; i++) {
+			Enumeration<String> enumeration = hasdNode.elements();
+			Enumeration<String> keysEnumeration = hasdNode.keys();
 
-		while (enumeration.hasMoreElements()) {
-			States nodeState = new States(null);
-			
-			String[] outputs = ((String) enumeration.nextElement()).split(",");
-			String[] keys = ((String) keysEnumeration.nextElement()).split("");
-			
-			if (keys.length >= 3 && Q.size() > 9) {
-				 nodeState = node.get(Q.get(Integer.parseInt(keys[1]+keys[2])-1));
-				 nodeState.addInputs(S.get(Integer.parseInt(keys[0])-1));
-			}else if (keys.length >= 3 && S.size() > 9) {
-				nodeState = node.get(Q.get(Integer.parseInt(keys[2])-1));
-				nodeState.addInputs(S.get(Integer.parseInt(keys[0]+keys[1])-1));
-			}else {
-				nodeState = node.get(Q.get(Integer.parseInt(keys[1])-1));
-				nodeState.addInputs(S.get(Integer.parseInt(keys[0])-1));
-			}
-			
-			System.out.println("KEYS: "+keys[0].toString()+keys[1].toString()+"ESTADOS: "+nodeState.getState()+" INPUTS: "+nodeState.getInputs());
+			while (enumeration.hasMoreElements()) {
+				States nodeState = new States(null);
+				String input = "";
 
-			if(!outputs[1].equals("vacio") && !outputs[0].equals("vacio")) {
+				String[] outputs = ((String) enumeration.nextElement()).split(",");
+				String[] keys = ((String) keysEnumeration.nextElement()).split("");
+				int key = -1;
 
-				nodeState.addOutputs(outputs[1]);
-				nodeState.addEndStates(node.get(outputs[0]));
+				if (keys.length >= 3 && Q.size() > 9) {
+					nodeState = node.get(Q.get(Integer.parseInt(keys[1]+keys[2])-1));
+					input = S.get(Integer.parseInt(keys[0])-1);
+					key = Integer.parseInt(keys[0]);
+				}else if (keys.length >= 3 && S.size() > 9) {
+					nodeState = node.get(Q.get(Integer.parseInt(keys[2])-1));
+					input = S.get(Integer.parseInt(keys[0]+keys[1])-1);
+					key = Integer.parseInt(keys[0]+keys[1]);
+				}else {
+					nodeState = node.get(Q.get(Integer.parseInt(keys[1])-1));
+					key = Integer.parseInt(keys[0]);
+					input = S.get(Integer.parseInt(keys[0])-1);
+				}
 
-			}else {
-				nodeState.addOutputs("vacio");
-				nodeState.addEndStates(new States("vacio"));
+				if(key == i && !outputs[1].equals("vacio") && !outputs[0].equals("vacio")) {
+					nodeState.addInputs(input);
+					nodeState.addOutputs(outputs[1]);
+					nodeState.addEndStates(node.get(outputs[0]));
+
+				}else if(key == i && outputs[1].equals("vacio") && outputs[0].equals("vacio")) {
+					nodeState.addOutputs("vacio");
+					nodeState.addEndStates(new States("vacio"));
+				}
 			}
 		}
+
+
 	}
 
 	public void nodeMoore(Hashtable<String, String> hasdNode) {
-		Enumeration<String> enumeration = hasdNode.elements();
-		Enumeration<String> keysEnumeration = hasdNode.keys();
+		for (int i = 1; i < S.size()+1; i++) {
+			Enumeration<String> enumeration = hasdNode.elements();
+			Enumeration<String> keysEnumeration = hasdNode.keys();
 
-		while (enumeration.hasMoreElements()) {
-			States nodeState = new States(null);
+			while (enumeration.hasMoreElements()) {
 
-			String output = (String) enumeration.nextElement();
-			String[] keys = ((String) keysEnumeration.nextElement()).split("");
-			int key = -1;
-			int key1 = -1;
+				States nodeState = new States(null);
+				String input = "";
 
-			if(!output.equals("vacio")) {
-				if(!Character.isDigit(output.charAt(0)) && key <= S.size()) {
-					
+				String output = (String) enumeration.nextElement();
+				String[] keys = ((String) keysEnumeration.nextElement()).split("");
+				int key = -1;
+				int key1 = -1;
+
+				if(!Character.isDigit(output.charAt(0)) && ((S.size() <= 9 && Integer.parseInt(keys[0]) <= S.size()) || (S.size() > 9 && Integer.parseInt(keys[0]+keys[1]) <= S.size()))) {
 					if (keys.length >= 3 && Q.size() > 9) {
-						 nodeState = node.get(Q.get(Integer.parseInt(keys[1]+keys[2])-1));
-						 nodeState.addInputs(S.get(Integer.parseInt(keys[0])-1));
-						 key = Integer.parseInt(keys[0]);
-						 key1 =  Integer.parseInt(keys[1]+keys[2]);
+						nodeState = node.get(Q.get(Integer.parseInt(keys[1]+keys[2])-1));
+						input = S.get(Integer.parseInt(keys[0])-1);
+						key = Integer.parseInt(keys[0]);
+						key1 =  Integer.parseInt(keys[1]+keys[2]);
 					}else if (keys.length >= 3 && S.size() > 9) {
 						nodeState = node.get(Q.get(Integer.parseInt(keys[2])-1));
-						nodeState.addInputs(S.get(Integer.parseInt(keys[0]+keys[1])-1));
+						input = S.get(Integer.parseInt(keys[0]+keys[1])-1);
 						key = Integer.parseInt(keys[0]+keys[1]);
 						key1 =  Integer.parseInt(keys[2]);
 					}else {
 						nodeState = node.get(Q.get(Integer.parseInt(keys[1])-1));
 						key = Integer.parseInt(keys[0]);
 						key1 =  Integer.parseInt(keys[1]);
-						nodeState.addInputs(S.get(key-1));
-						
+						System.out.println("KEY: "+(key-1)+" NORMAL: "+key);
+						input = S.get(key-1);
 					}
 
-					nodeState = node.get(Q.get(key1-1));
-
-					String indexNode = hasdNode.get(Integer.toString(S.size()+1)+key1);
-					
-					nodeState.addOutputs(indexNode);
-					nodeState.addEndStates(node.get(output));
+					if(key == i && !output.equals("vacio")) {
+						String indexNode = hasdNode.get(Integer.toString(S.size()+1)+key1);
+						nodeState.addInputs(input);
+						nodeState.addOutputs(indexNode);
+						nodeState.addEndStates(node.get(output));
+					}else if(key == i && output.equals("vacio")){
+						nodeState.addOutputs("vacio");
+						nodeState.addEndStates(new States("vacio"));
+					}
 				}
-			}else {
-				nodeState.addOutputs("vacio");
-				nodeState.addEndStates(new States("vacio"));
 			}
-		}
+		}		
 	}
 
 	public void createStates() {
@@ -187,18 +195,7 @@ public class FiniteStateMachine {
 		ArrayList<Hashtable<String, States>> partitioning = new ArrayList<>();
 
 		partitioning = searchFirstBlock(partitioning, states);
-		
-		System.out.println("------------PRIMER PARTICIONAMIENTO--------------");
-    	
-    	for (int i = 0; i < partitioning.size(); i++) {
-    		System.out.println("NUEVO BLOQUE:");
-			Enumeration<States> contenedor = partitioning.get(i).elements();
-			while (contenedor.hasMoreElements()) {
-				States states2 = (States) contenedor.nextElement();
-				System.out.println(states2.getState()+" Tamanio:"+partitioning.size());
-			}
-		}
-		
+
 		ArrayList<Hashtable<String, States>> newPartitioning = new ArrayList<>();
 
 		partitioning = partitionings(partitioning, newPartitioning);
@@ -207,29 +204,18 @@ public class FiniteStateMachine {
 	}
 
 	public ArrayList<Hashtable<String, States>> partitionings(ArrayList<Hashtable<String, States>> partitioning, ArrayList<Hashtable<String, States>> newPartitioning){
-		
+
 		for (int i = 0; i < partitioning.size(); i++) {
 			Enumeration<States> state = partitioning.get(i).elements();
 			States nextElement = state.nextElement();
 			newPartitioning = secondPartitioning(partitioning, newPartitioning, partitioning.get(i), nextElement);
 		}
-		
-		System.out.println("------------OTROS PARTICIONAMIENTO--------------");
-    	
-    	for (int i = 0; i < newPartitioning.size(); i++) {
-    		System.out.println("NUEVO BLOQUE:");
-			Enumeration<States> contenedor = newPartitioning.get(i).elements();
-			while (contenedor.hasMoreElements()) {
-				States states2 = (States) contenedor.nextElement();
-				System.out.println(states2.getState()+" Tamanio:"+newPartitioning.size());
-			}
-		}
 
 		if (!partitioning.equals(newPartitioning)) {
-			ArrayList<Hashtable<String, States>> currentPartitioning = new ArrayList<>();
-			partitionings(newPartitioning, currentPartitioning);
+			ArrayList<Hashtable<String, States>> newCurrent = new ArrayList<>();
+			newPartitioning = partitionings(newPartitioning, newCurrent);
 		}
-		
+
 		return newPartitioning;
 	}
 
@@ -244,11 +230,11 @@ public class FiniteStateMachine {
 		}else if (block.size() > 1) {
 			currentBlock.put(first.getState(), first);
 
-			boolean founded = true;
-
 			Enumeration<States> sectionBLock = block.elements();
 
 			while (sectionBLock.hasMoreElements()) {
+				
+				boolean founded = true;
 				States states = (States) sectionBLock.nextElement();
 				if (!first.getState().equalsIgnoreCase(states.getState())) {
 					for (int i = 0; i < first.getEndStates().size() && founded; i++) {
@@ -256,20 +242,21 @@ public class FiniteStateMachine {
 					}
 					if (founded) {
 						currentBlock.put(states.getState(), states);
+						System.out.println("FOUND: "+first.getState()+" "+states.getState());
 					} else {
 						differentBlock.put(states.getState(), states);
+						System.out.println("NOT FOUND: "+first.getState()+" "+states.getState());
 					}
 				}
 			}
 
 			newPartitioning.add(currentBlock);
 			Enumeration<States> newFirst = differentBlock.elements();
-			
+
 			if (newFirst.hasMoreElements()) {
 				States different = newFirst.nextElement();
 				secondPartitioning(current, newPartitioning, differentBlock, different);
 			}
-			
 		}
 
 		return newPartitioning;
@@ -278,10 +265,32 @@ public class FiniteStateMachine {
 	private boolean searchStateInBlock(ArrayList<Hashtable<String, States>> partitioning, String first, String second) {
 
 		boolean founded = false;
+		System.out.println("-----------------PARTICIONING---------------");
+		System.out.println("FIRST: "+first+" SECOND: "+second);
+
+		for (int i = 0; i < partitioning.size(); i++) {
+			System.out.println("BUSCAR EN BLOQUE:");
+			Enumeration<States> contenedor = partitioning.get(i).elements();
+			while (contenedor.hasMoreElements()) {
+				States states2 = (States) contenedor.nextElement();
+				System.out.println(states2.getState());
+			}
+		}
 
 		for (int i = 0; i < partitioning.size() && !founded; i++) {
+			System.out.println("ENTRAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
 			if (partitioning.get(i).get(first) != null && partitioning.get(i).get(second) != null) {
+				System.out.println("1. CONTENIDO: "+first+" "+second);
 				founded = true;
+			}else if (partitioning.get(i).get(first) == null && partitioning.get(i).get(second) != null) {
+				System.out.println("2. CONTENIDO: "+first+" "+second);
+				i = partitioning.size();
+			}else if (partitioning.get(i).get(first) != null && partitioning.get(i).get(second) == null) {
+				System.out.println("3. CONTENIDO: "+first+" "+second);
+				i = partitioning.size();
+			}else if (partitioning.get(i).get(first) == null && partitioning.get(i).get(second) == null && first.equals("vacio") && second.equals("vacio")) {
+				founded = true;
+				System.out.println("4. CONTENIDO: "+first+" "+second);
 			}
 		}
 		return founded;
@@ -300,9 +309,6 @@ public class FiniteStateMachine {
 			firstBlock.put(first.getState(), first);
 
 			for(int i = 1; i < states.size(); i++) {
-				
-				System.out.println("-----------SE IGUALA--------------");
-				System.out.println(first.getState()+": "+first.getOutputs()+" "+states.get(i).getState()+": "+states.get(i).getOutputs());
 
 				if(first.getOutputs().equals(states.get(i).getOutputs())) {
 					firstBlock.put(states.get(i).getState(), states.get(i));
@@ -314,13 +320,6 @@ public class FiniteStateMachine {
 			partitioning.add(firstBlock);
 			states.remove(0);
 			searchFirstBlock(partitioning, states);
-		}
-		
-		System.out.println("---------PRIMER PARTICIONAMIENTO PRIMER BLOQUE---------");
-		Enumeration<States> contenedor = firstBlock.elements();
-		while (contenedor.hasMoreElements()) {
-			States states2 = (States) contenedor.nextElement();
-			System.out.println(states2.getState()+" Tamanio:"+firstBlock.size());
 		}
 
 		return partitioning;
