@@ -6,9 +6,7 @@
 
 * Operating system: Windows 10
 
-* Video about the program: https://www.youtube.com/watch?v=ahvnFORVdn0
-
-* File with project documentation: https://bit.ly/2Tf1ZG2
+* File with project documentation: 
 
 * Project carried out by: 
 
@@ -17,3 +15,5 @@
   Santiago Trochez Velasco -> https://github.com/Santiagokmids
 
 * Description:
+
+This project is about finite states machine, referring to Moore's and Mealy's machine in this case. The program is able to receive finite state machines, of the above type, and transform them into a minimally equivalent version.
