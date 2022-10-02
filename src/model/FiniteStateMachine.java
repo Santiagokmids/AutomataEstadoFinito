@@ -193,7 +193,15 @@ public class FiniteStateMachine {
 
 		return partitioning;
 	}
-
+	
+	/** 
+	 *<b>name:</b>  partitionings.
+	 *Do the partitioning after doing the first partitioning of recursive way.<br>
+	 *@param partitioning. This is the partitioning made in searchFirstBlock method.
+	 *@param newPartitioning. This is the newPartitioning that will be assigned.
+	 *<b> post: </b> The new partitioning assigned.
+	 *@return newPartitioning. This is a ArrayList of Hashtable where we have the last step of partitioning.
+	 */
 	public ArrayList<Hashtable<String, States>> partitionings(ArrayList<Hashtable<String, States>> partitioning, ArrayList<Hashtable<String, States>> newPartitioning){
 
 		for (int i = 0; i < partitioning.size(); i++) {
@@ -209,7 +217,17 @@ public class FiniteStateMachine {
 
 		return newPartitioning;
 	}
-
+	
+	/** 
+	 *<b>name:</b>  secondPartitioning.
+	 *Do the partitioning after doing the first partitioning.<br>
+	 *@param current. That is the ArrayList of Hashtable that have the last step of partitioing. 
+	 *@param newPartitioning. That is the new ArrayList of Hashtable after of doing the partitioning.
+	 *@param block. That is a block where we have a states that havn't been partitioned yet. 
+	 *@param first. That is the first state of the block.
+	 *<b> post: </b> The new partitioning.
+	 *@return newPartitioning. This is a ArrayList of Hashtable where we have the last step of partitioning.
+	 */
 	public ArrayList<Hashtable<String, States>> secondPartitioning(ArrayList<Hashtable<String, States>> current, ArrayList<Hashtable<String, States>> newPartitioning,  Hashtable<String, States> block, States first) {
 
 		Hashtable<String, States> currentBlock = new Hashtable<>();
@@ -250,7 +268,16 @@ public class FiniteStateMachine {
 
 		return newPartitioning;
 	}
-
+	
+	/** 
+	 *<b>name:</b>  searchStateInBlock.
+	 *Search one state in a block of partitioning.<br>
+	 *@param partitioning. This is the ArrayList of Hastable where for we have the blocks of partitioning.
+	 *@param first. This is a first state of the ArrayList endStates.
+	 *@param second. This is a second state of the ArrayList endStates.
+	 *<b> post: </b> The boolean value of search a state in the endStates of another states.
+	 *@return founded. This is a boolean value that determine if first is in the same block of second.
+	 */
 	private boolean searchStateInBlock(ArrayList<Hashtable<String, States>> partitioning, String first, String second) {
 
 		boolean founded = false;
@@ -272,7 +299,15 @@ public class FiniteStateMachine {
 		}
 		return founded;
 	}
-
+	
+	/** 
+	 *<b>name:</b>  searchFirstBlock.
+	 *Get the first block of the partitioning algorithm.<br>
+	 *@param partitioning. This is the ArrayList of Hastable where for each index, we have a block of states with same inputs.
+	 *@param states. This is a ArrayList with all states of the finite state machine. 
+	 *<b> post: </b> The first block of partitioning has been created.
+	 *@return partitioning. This is a ArrayList of Hastable with the blocks of states with the same inputs.
+	 */
 	public ArrayList<Hashtable<String, States>> searchFirstBlock(ArrayList<Hashtable<String, States>> partitioning, ArrayList<States> states){
 
 		Hashtable<String, States> firstBlock = new Hashtable<>();
@@ -301,27 +336,63 @@ public class FiniteStateMachine {
 
 		return partitioning;
 	}
-
+	
+	/** 
+	 *<b>name:</b>  getS.
+	 *Set the set S of inputs of the finite state machine.<br> 
+	 *<b> post: </b> The set of inputs of the finite state machine.
+	 *@return S. This is a ArrayList of inputs of the finite state machine.
+	 */
 	public ArrayList<String> getS() {
 		return S;
 	}
-
+	
+	/**
+	 * <b>name:</b> setS
+	 * Set the set S of inputs of the finite state machine.<br> 
+	 * <b>post:</b> The new ArrayList of inputs of the finite state machine. 
+	 * @param S
+	 */
 	public void setS(ArrayList<String> S) {
 		this.S = S;
 	}
-
+	
+	/** 
+	 *<b>name:</b>  getQ.
+	 *Set the set Q of states of the finite state machine.<br> 
+	 *<b> post: </b> The set of states of the finite state machine.
+	 *@return Q. This is a ArrayList of States of the finite state machine.
+	 */
 	public ArrayList<String> getQ() {
 		return Q;
 	}
-
+	
+	/**
+	 * <b>name:</b> setQ
+	 * Set the set Q of states of the finite state machine.<br> 
+	 * <b>post:</b> The new ArrayList of states of the finite state machine. 
+	 * @param Q
+	 */
 	public void setQ(ArrayList<String> Q) {
 		this.Q = Q;
 	}
-
+	
+	/** 
+	 *<b>name:</b>  getStatesConnecteds.
+	 *Get the statesConnecteds arraylist.<br> 
+	 *<b> post: </b> The arraylist of states connecteds.
+	 *@return statesConnecteds. This is a ArrayList of States with the states connecteds.
+	 */
 	public ArrayList<States> getStatesConnecteds() {
 		return statesConnecteds;
 	}
-
+	
+	/**
+	 * <b>name:</b> setStatesConnecteds. <br>
+	 * Set the ArrayList of statesConnecteds. <br>
+	 * <b>post:</b> The new ArrayList of statesConnecteds. 
+	 * @param statesConnecteds. ArrayList that will be the new ArrayList of states connecteds.
+	 */
 	public void setStatesConnecteds(ArrayList<States> statesConnecteds) {
 		this.statesConnecteds = statesConnecteds;
 	}
