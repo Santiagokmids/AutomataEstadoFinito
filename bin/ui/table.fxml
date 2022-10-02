@@ -33,7 +33,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="79.0" prefWidth="854.0">
                <children>
-                  <Button layoutX="345.0" layoutY="20.0" mnemonicParsing="false" onAction="#getValues" prefHeight="39.0" prefWidth="164.0" style="-fx-background-color: white;" text="Calcular Autómata Conexo " textFill="#fd6585" />
+                  <Button layoutX="345.0" layoutY="20.0" mnemonicParsing="false" onAction="#getValues" prefHeight="39.0" prefWidth="164.0" style="-fx-background-color: white;" text="Enviar información" textFill="#fd6585" />
                </children>
             </AnchorPane>
          </children>
