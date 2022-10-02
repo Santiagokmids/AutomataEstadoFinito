@@ -167,7 +167,6 @@ public class FiniteStateMachineGUI {
 
 				if (col != 0 && row == 0 && j <= inputs.size()) {
 					Label label = new Label(inputs.get(inputIndex));
-					label.setOpacity(0.6);
 					label.setId(col+""+row);
 					gridPane.add(label, col, row);
 
@@ -176,7 +175,6 @@ public class FiniteStateMachineGUI {
 
 				}else if(col != 0 && row == 0 && j > inputs.size()) {
 					Label label = new Label("Salidas");
-					label.setOpacity(0.6);
 					label.setId(col+""+row);
 
 					gridPane.add(label, col, row);
@@ -184,7 +182,6 @@ public class FiniteStateMachineGUI {
 
 				} else if (col == 0 && row != 0) {
 					Label label = new Label(states.get(stateIndex));
-					label.setOpacity(0.6);
 					label.setId(col+""+row);
 					gridPane.add(label, col, row);
 					stateIndex++;
