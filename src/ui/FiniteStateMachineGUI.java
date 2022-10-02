@@ -112,7 +112,7 @@ public class FiniteStateMachineGUI {
 			alert.showAndWait();
 
 		}else if(!state.isEmpty() && !input.isEmpty() && machine >= 0) {
-			verify = finiteStateMachine.getAtributes(state, input);
+			verify = finiteStateMachine.getAttributes(state, input);
 
 			if (!verify) {
 				table(finiteStateMachine.getQ(), finiteStateMachine.getS());

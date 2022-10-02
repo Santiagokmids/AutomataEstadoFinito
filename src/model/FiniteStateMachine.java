@@ -4,6 +4,13 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+/**
+ * This class contains methods, attributes,  and relations related with a finite state machine.
+ * @version 1
+ * @author Santiago Trochez Velasco, https://github.com/Santiagokmids <br>
+ * @author Luis Miguel Ossa Arias, https://github.com/Itsumohitoride <br>
+ */
+
 public class FiniteStateMachine {
 
 	public static final int MEALY = 0;
@@ -13,12 +20,26 @@ public class FiniteStateMachine {
 	private ArrayList<String> S;
 	private Hashtable<String, States> node;
 	private ArrayList<States> statesConnecteds;
+	
+	/**
+	 * <b>name:</b> FiniteStateMachine <br>
+	 * Create an object finite state machine. <br>
+	 * <b>post:</b> An object finite state machine has created. <br>
+	 */
 
 	public FiniteStateMachine() {
 		Q = new ArrayList<>();
 		S = new ArrayList<>();
 		node = new Hashtable<>();
 	}
+	
+	/**
+	 * <b>name:</b> assignAtributes <br>
+	 * Assign states and inputs in arraylist. <br>
+	 * <b>post:</b> The states and inputs from the ui information has been assign into the system. <br>
+	 * @param states is the array with all the states of the finite state machine.
+	 * @param inputs is the array with all the inputs of the finite state machine.
+	 */
 
 	public void assignAtributes(String[] states, String[] inputs) {
 		for(int i = 0; i < states.length; i++) {
@@ -31,8 +52,17 @@ public class FiniteStateMachine {
 
 		createStates();
 	}
+	
+	/**
+	 * <b>name:</b> getAtributes <br>
+	 * Get the attributes states and inputs. Furthermore, the information is split by a comma. <br>
+	 * <b>post:</b> The states and inputs was split by a comma. <br>
+	 * @param states is the string with all the states of the finite state machine.
+	 * @param inputs is the string with all the inputs of the finite state machine.
+	 * @return <code>verify</code> is the result of verify if the states name don't start with a number.
+	 */
 
-	public boolean getAtributes(String states, String inputs) {
+	public boolean getAttributes(String states, String inputs) {
 		String[] newStates = states.split(",");
 		String[] newInputs = inputs.split(",");
 
@@ -40,6 +70,52 @@ public class FiniteStateMachine {
 
 		return verify;
 	}
+	
+	/**
+	 * <b>name:</b> createStates <br>
+	 * Add the states into the system, only a name in this case. <br>
+	 * <b>post:</b> The states of the finite state machine were aggregated. <br> 
+	 */
+	
+	public void createStates() {
+		for (int i = 0; i < Q.size(); i++) {
+			States state = new States(Q.get(i));
+			node.put(Q.get(i), state);
+		}
+	}
+	
+	/**
+	 * <b>name:</b> verifyStates <br>
+	 * Verify is the name's states start without a number. <br>
+	 * <b>post:</br> The name of all the states was verified. <br>
+	 * @param states is the array with the name of all states for the finite state machine.
+	 * @param inputs is the array with the name of all inputs for the finite state machine.
+	 * @return <code>verify</code> is the verification of all the state's name.
+	 */
+
+	public boolean verifyStates(String[] states, String[] inputs) {
+		boolean verify = false;
+
+		for (int i = 0; i < states.length && !verify; i++) {
+
+			if(Character.isDigit(states[i].charAt(0))) {
+				verify = true;
+			}
+		}
+
+		if(!verify) {
+			assignAtributes(states, inputs);
+		}
+
+		return verify;
+	}
+	
+	/**
+	 * <b>name:</b> nodeMealy
+	 * Create a node of mealy machine. <br>
+	 * <b>post:</b> A node of a mealy machine was created. <br>
+	 * @param hasdNode is the information of the machine recollected from the user's information.
+	 */
 
 	public void nodeMealy(Hashtable<String, String> hasdNode) {
 		for (int i = 1; i < S.size()+1; i++) {
@@ -82,6 +158,13 @@ public class FiniteStateMachine {
 
 
 	}
+	
+	/**
+	 * <b>name:</b> nodeMoore <br>
+	 * Create a node of moore machine. <br>
+	 * <b>post:</b> A node of a moore machine was created. <br>
+	 * @param hasdNode is the information of the machine recollected from the user's information.
+	 */
 
 	public void nodeMoore(Hashtable<String, String> hasdNode) {
 		for (int i = 1; i < S.size()+1; i++) {
@@ -130,29 +213,11 @@ public class FiniteStateMachine {
 		}		
 	}
 
-	public void createStates() {
-		for (int i = 0; i < Q.size(); i++) {
-			States state = new States(Q.get(i));
-			node.put(Q.get(i), state);
-		}
-	}
-
-	public boolean verifyStates(String[] states, String[] inputs) {
-		boolean verify = false;
-
-		for (int i = 0; i < states.length && !verify; i++) {
-
-			if(Character.isDigit(states[i].charAt(0))) {
-				verify = true;
-			}
-		}
-
-		if(!verify) {
-			assignAtributes(states, inputs);
-		}
-
-		return verify;
-	}
+	/**
+	 * <b>name:</br> searchConnected <br>
+	 * Search all the states that are accessible from the initial state. <br>
+	 * <b>post:</br> The search of all the states that are accessible from the initial state was made. <br>
+	 */
 
 	@SuppressWarnings("unchecked")
 	public ArrayList<States> searchConnected(){
@@ -167,6 +232,14 @@ public class FiniteStateMachine {
 
 		return statesConnected;
 	}
+	
+	/**
+	 * <b>name:</b> searchConnected <br>
+	 * Search all the states that are accessible from the initial state. This method is executed recursively. <br>
+	 * <b>post:</b> All the states that are accessible from the initial state was searched recursively. <br>
+	 * @param statesConnected are the states accessible from the initial state.
+	 * @param state is the actual node that play the role of the initial state.
+	 */
 
 	public void searchConnected(ArrayList<States> statesConnected, States state) {
 		ArrayList<States> endStates = state.getEndStates();
@@ -180,6 +253,14 @@ public class FiniteStateMachine {
 			}
 		}
 	}
+	
+	/**
+	 * <b>name:</b> partitioning <br>
+	 * In this method the partitioning of the finite state machine into a minimum equivalent machine is developed. <br>
+	 * <b>post:</b> the partitioning of the finite state machine into a minimum equivalent machines was developed. <br>
+	 * @param states is the arraylist of all the state's machine.
+	 * @return <code>partitioning</code> is the current partitioning of the finite state machine.
+	 */
 
 	public ArrayList<Hashtable<String, States>> partitioning(ArrayList<States> states){
 
