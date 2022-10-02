@@ -87,7 +87,7 @@ public class FiniteStateMachine {
 	/**
 	 * <b>name:</b> verifyStates <br>
 	 * Verify is the name's states start without a number. <br>
-	 * <b>post:</br> The name of all the states was verified. <br>
+	 * <b>post:</b> The name of all the states was verified. <br>
 	 * @param states is the array with the name of all states for the finite state machine.
 	 * @param inputs is the array with the name of all inputs for the finite state machine.
 	 * @return <code>verify</code> is the verification of all the state's name.
@@ -214,9 +214,10 @@ public class FiniteStateMachine {
 	}
 
 	/**
-	 * <b>name:</br> searchConnected <br>
+	 * <b>name:</b> searchConnected <br>
 	 * Search all the states that are accessible from the initial state. <br>
-	 * <b>post:</br> The search of all the states that are accessible from the initial state was made. <br>
+	 * <b>post:</b> The search of all the states that are accessible from the initial state was made. <br>
+	 * @return <code>statesConnected</code> are all the states that are connected by an initial state.
 	 */
 
 	@SuppressWarnings("unchecked")
@@ -432,7 +433,7 @@ public class FiniteStateMachine {
 	 * <b>name:</b> setS
 	 * Set the set S of inputs of the finite state machine.<br> 
 	 * <b>post:</b> The new ArrayList of inputs of the finite state machine. 
-	 * @param S
+	 * @param S new value for the inputs.
 	 */
 	public void setS(ArrayList<String> S) {
 		this.S = S;
@@ -452,7 +453,7 @@ public class FiniteStateMachine {
 	 * <b>name:</b> setQ
 	 * Set the set Q of states of the finite state machine.<br> 
 	 * <b>post:</b> The new ArrayList of states of the finite state machine. 
-	 * @param Q
+	 * @param Q new value for the states.
 	 */
 	public void setQ(ArrayList<String> Q) {
 		this.Q = Q;
