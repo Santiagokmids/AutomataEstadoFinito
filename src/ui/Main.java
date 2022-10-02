@@ -23,7 +23,7 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
-		finiteStateMachineGUI = new FiniteStateMachineGUI(finiteStateMachine, primaryStage);
+		finiteStateMachineGUI = new FiniteStateMachineGUI(finiteStateMachine);
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main-pane.fxml"));
 		

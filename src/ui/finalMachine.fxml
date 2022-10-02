@@ -15,7 +15,7 @@
          <children>
             <AnchorPane prefHeight="98.0" prefWidth="854.0">
                <children>
-                  <Label layoutX="271.0" layoutY="36.0" text="Inserte los valores en la tabla">
+                  <Label layoutX="268.0" layoutY="36.0" text="Autómata mínimo equivalente">
                      <font>
                         <Font name="Arial" size="24.0" />
                      </font>
@@ -33,7 +33,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="79.0" prefWidth="854.0">
                <children>
-                  <Button layoutX="345.0" layoutY="20.0" mnemonicParsing="false" onAction="#getValues" prefHeight="39.0" prefWidth="164.0" style="-fx-background-color: white;" text="Calcular Autómata Conexo " textFill="#fd6585" />
+                  <Button layoutX="345.0" layoutY="20.0" mnemonicParsing="false" onAction="#loadBanner" prefHeight="39.0" prefWidth="164.0" style="-fx-background-color: white;" text="Nuevo autómata" textFill="#fd6585" />
                </children>
             </AnchorPane>
          </children>

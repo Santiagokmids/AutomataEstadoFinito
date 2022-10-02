@@ -20,14 +20,6 @@ public class FiniteStateMachine {
 		node = new Hashtable<>();
 	}
 
-	public boolean createMealyMachine() {
-		return false;
-	}
-
-	public boolean createMooreMachine() {
-		return false;
-	}
-
 	public void assignAtributes(String[] states, String[] inputs) {
 		for(int i = 0; i < states.length; i++) {
 			Q.add(states[i]);
@@ -121,7 +113,6 @@ public class FiniteStateMachine {
 						nodeState = node.get(Q.get(Integer.parseInt(keys[1])-1));
 						key = Integer.parseInt(keys[0]);
 						key1 =  Integer.parseInt(keys[1]);
-						System.out.println("KEY: "+(key-1)+" NORMAL: "+key);
 						input = S.get(key-1);
 					}
 
@@ -242,10 +233,8 @@ public class FiniteStateMachine {
 					}
 					if (founded) {
 						currentBlock.put(states.getState(), states);
-						System.out.println("FOUND: "+first.getState()+" "+states.getState());
 					} else {
 						differentBlock.put(states.getState(), states);
-						System.out.println("NOT FOUND: "+first.getState()+" "+states.getState());
 					}
 				}
 			}
@@ -265,32 +254,20 @@ public class FiniteStateMachine {
 	private boolean searchStateInBlock(ArrayList<Hashtable<String, States>> partitioning, String first, String second) {
 
 		boolean founded = false;
-		System.out.println("-----------------PARTICIONING---------------");
-		System.out.println("FIRST: "+first+" SECOND: "+second);
-
-		for (int i = 0; i < partitioning.size(); i++) {
-			System.out.println("BUSCAR EN BLOQUE:");
-			Enumeration<States> contenedor = partitioning.get(i).elements();
-			while (contenedor.hasMoreElements()) {
-				States states2 = (States) contenedor.nextElement();
-				System.out.println(states2.getState());
-			}
-		}
 
 		for (int i = 0; i < partitioning.size() && !founded; i++) {
-			System.out.println("ENTRAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+			
 			if (partitioning.get(i).get(first) != null && partitioning.get(i).get(second) != null) {
-				System.out.println("1. CONTENIDO: "+first+" "+second);
 				founded = true;
+				
 			}else if (partitioning.get(i).get(first) == null && partitioning.get(i).get(second) != null) {
-				System.out.println("2. CONTENIDO: "+first+" "+second);
 				i = partitioning.size();
+				
 			}else if (partitioning.get(i).get(first) != null && partitioning.get(i).get(second) == null) {
-				System.out.println("3. CONTENIDO: "+first+" "+second);
 				i = partitioning.size();
+				
 			}else if (partitioning.get(i).get(first) == null && partitioning.get(i).get(second) == null && first.equals("vacio") && second.equals("vacio")) {
 				founded = true;
-				System.out.println("4. CONTENIDO: "+first+" "+second);
 			}
 		}
 		return founded;
