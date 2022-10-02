@@ -213,6 +213,8 @@ public class FiniteStateMachineGUI {
 
     	ArrayList<Hashtable<String, States>> partitioning = finiteStateMachine.partitioning(states);
     	
+    	assignNewNames(partitioning);
+    	
     	System.out.println("------------SEGUNDO PARTICIONAMIENTO--------------");
     	
     	for (int i = 0; i < partitioning.size(); i++) {
@@ -223,5 +225,77 @@ public class FiniteStateMachineGUI {
 				System.out.println(states2.getState());
 			}
 		}
+    }
+    
+    public void assignNewNames(ArrayList<Hashtable<String,States>> partitioning){
+    	
+    	for (int i = 0; i < partitioning.size(); i++) {
+			String name = "{";
+			
+			Enumeration<States> contenedor = partitioning.get(i).elements();
+			States statesPartitioning = (States) contenedor.nextElement();
+			
+			name += statesPartitioning.getState();
+			
+			while (contenedor.hasMoreElements()) {
+				statesPartitioning = (States) contenedor.nextElement();
+				name += ", "+statesPartitioning.getState();
+			}
+			name += "}";
+			
+			Enumeration<States> assignNames = partitioning.get(i).elements();
+			
+			while (assignNames.hasMoreElements()) {
+				States stateForChange = (States) assignNames.nextElement();
+				stateForChange.setState(name);
+			}
+		}
+    }
+    
+    public void newPartitioning(ArrayList<Hashtable<String,States>> partitioning) {
+    	GridPane gridPane = new GridPane();
+    	int output = 1;
+    	
+    	ArrayList<String> inputs = finiteStateMachine.getQ();
+    	
+    	if (machine == FiniteStateMachine.MOORE) {
+			output = 2;
+		}
+    	
+    	for (int i = 0; i < partitioning.size()+1; i++) {
+    		
+    		Enumeration<States> states = partitioning.get(i).elements();
+    		Enumeration<States> outputs = partitioning.get(i).elements();
+    		
+    		int inputIndex = 0;
+    		for (int j = 0; j < inputs.size()+output; j++) {
+    			int row = i;
+        		int col = j;
+        		
+        		if (col != 0 && row == 0 && j <= inputs.size()) {
+    				Label label = new Label(inputs.get(inputIndex));
+    				gridPane.add(label, col, row);
+    				
+    				GridPane.setHalignment(label, HPos.CENTER);
+    				inputIndex++;
+    				
+    			}else if(col != 0 && row == 0 && j > inputs.size()) {
+    				Label label = new Label("Salidas");
+
+    				gridPane.add(label, col, row);
+    				GridPane.setHalignment(label, HPos.CENTER);
+    				
+    			} else if (col == 0 && row != 0) {
+    				Label label = new Label(states.nextElement().getState());
+    				gridPane.add(label, col, row);
+    				
+				} else if(row != 0 && col != 0) {
+					Label label = new Label(outputs.nextElement().getEndStates().get(0).getState());
+            		gridPane.add(label, col, row);
+        		}
+			}
+		}
+    	gridPane.setAlignment(Pos.CENTER);
+    	table.getChildren().add(gridPane);
     }
 }
